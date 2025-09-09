@@ -1,3 +1,16 @@
+// Manage Spinner / Loading
+const manageSpinner = (status) => {
+  if(status == true){
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("word-container").classList.add("hidden");
+  }else{
+    document.getElementById("word-container").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("hidden");
+
+  }
+}
+
+
 const loadLessons = () => {
   const url = "https://openapi.programming-hero.com/api/levels/all";
   fetch(url)
@@ -25,6 +38,7 @@ loadLessons();
 
 // Word Load Function
 const loadLevelWord = (id) => {
+  manageSpinner(true);
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((res) => res.json())
@@ -67,6 +81,7 @@ const displayLevelWord = (words) => {
     `;
     wordContainer.appendChild(card);
   });
+  manageSpinner(false);
 };
 // Call Function for word load
 loadLevelWord();
@@ -124,3 +139,5 @@ const showSynonyms = (synonyms) => {
   const htmlElements = synonyms.map((el) => `<span class="btn">${el}</span>`);
   return htmlElements.join(" ");
 }
+
+
